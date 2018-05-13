@@ -1,1 +1,66 @@
 
+--Get the order ID and unit price for each order by joining the Orders table and the Order Details table.
+
+Note that you need to use [Order Details] since the table name contains whitespace.
+SELECT a.OrderID, b.UnitPrice
+FROM DBO.ORDERS AS a
+JOIN DBO.[ORDER DETAILS]AS b
+ON a.OrderID=b.OrderID;
+
+--Get the order ID and first name of the associated employee by joining the Orders and Employees tables.
+SELECT o.OrderID, e.FirstName
+from DBO.ORDERS AS o
+JOIN DBO.EMPLOYEES AS e
+ON o.EmployeeID=e.EmployeeID;
+
+--Get the employee ID and related territory description for each territory an employee is in, by joining the Employees, EmployeeTerritories and Territories tables.
+Select e.EmployeeID, t.TerritoryDescription
+from DBO.EMPLOYEES AS e
+JOIN DBO.EMPLOYEETERRITORIES AS et
+ON e.EmployeeID=et.EmployeeID
+JOIN DBO.TERRITORIES AS t
+ON et.TerritoryID=t.TerritoryID;
+
+--Select all the different countries from the Customers table and the Suppliers table using UNION.
+SELECT cust.Country
+FROM DBO.CUSTOMERS AS cust
+UNION 
+SELECT s.Country
+FROM DBO.SUPPLIERS AS s;
+
+--Select all the countries, including duplicates, from the Customers table and the Suppliers table using UNION ALL.
+SELECT cust.Country
+from DBO.CUSTOMERS AS cust
+UNION ALL
+SELECT s.Country
+from DBO.SUPPLIERS AS s;
+
+--Using the Products table, get the unit price of each product, rounded to the nearest dollar.
+SELECT ROUND(UnitPrice,0)
+FROM DBO.PRODUCTS;
+
+--Using the Products table, get the total number of units in stock across all products.
+SELECT SUM(UnitsInStock)
+FROM DBO.PRODUCTS;
+
+--Using the Orders table, get the order ID and year of the order by using YEAR(). Alias the year as OrderYear.
+SELECT OrderID, YEAR(OrderDate) AS Orderyear
+FROM DBO.ORDERS;
+
+--Using the Orders table, get the order ID and month of the order by using DATENAME(). Alias the month as OrderMonth.
+
+SELECT OrderID, DATENAME(Month,OrderDate) AS OrderMonth
+FROM DBO.ORDERS;
+
+--Use LEFT() to get the first two letters of each region description from the Region table.
+SELECT LEFT(RegionDescription, 2)
+FROM DBO.REGION;
+
+--Using the Suppliers table, select the city and postal code for each supplier, using WHERE and ISNUMERIC() to select only those postal codes which have no letters in them.
+SELECT City, PostalCode
+FROM DBO.SUPPLIERS 
+WHERE ISNUMERIC(PostalCode)=1;
+
+--Use LEFT() and UPPER() to get the first letter (capitalized) of each region description from the Region table.
+SELECT UPPER(LEFT(RegionDescription,1))
+FROM DBO.REGION;
