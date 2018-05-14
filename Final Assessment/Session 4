@@ -8,7 +8,7 @@ WHERE ISNUMERIC(MONTH(ShippedDate))=1;
 
 --2.Using the Suppliers table, select the company name and use a simple IIF expression to display 'outdated' if a company has a fax number, or 'modern' if it doesn't. Alias the result of the IIF expression to Status.
 
-SELECT CompanyName,IIF(ISNUMERIC(ISNULL(Fax, 0))=0,'outdated','modern') as Status
+SELECT CompanyName,IIF(Fax IS NULL,'outdated','modern') as Status
 From DBO.SUPPLIERS
 
 
